@@ -11,7 +11,10 @@ import Tareas from "./components/Tareas";
 
 export default {
   name: 'App',
-  components:{Tareas}
+  components:{Tareas},
+  created() {
+    this.$store.commit('agregarTarea','jola')
+  }
 
 }
 </script>
