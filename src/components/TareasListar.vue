@@ -1,6 +1,6 @@
 <template>
     <ul>
-        <li v-for="(tarea,index) in tareas" :key="index">
+        <li v-for="(tarea,index) in obtenerTareasFiltradas" :key="index">
 
             <template v-if="editando === index">
                 <input type="text" v-model="texto" @keyup.enter="emitirTareaEditada" />
@@ -10,7 +10,7 @@
             <template v-else>
                 {{tarea}}
                 <button class="editar" @click="editarTarea(index,tarea)">editar</button>
-                <button class="eliminar" @click="$emit('eliminarTarea',index)">eliminar</button>
+                <button class="eliminar" @click="removerTarea(index)">eliminar</button>
             </template>
 
 
@@ -19,24 +19,27 @@
 </template>
 
 <script>
+    import {mapGetters, mapMutations} from 'vuex'
+
     export default {
         name: 'TareasListar',
-        props: {
-            tareas: {}
-        },
         data(){
             return {
                 editando: null,
                 texto: ''
             }
         },
+        computed: {
+          ...mapGetters(['obtenerTareasFiltradas']) //this.obtenerTareasFiltradas
+        },
         methods:{
+            ...mapMutations(['removerTarea', 'modificarTarea']),
             editarTarea(index,tarea){
                 this.editando = index
                 this.texto = tarea
             },
             emitirTareaEditada(){
-                this.$emit('editarTarea', this.editando, this.texto)
+                this.modificarTarea({index: this.editando, tarea: this.texto})
                 this.editando = null
                 this.texto = ''
             }

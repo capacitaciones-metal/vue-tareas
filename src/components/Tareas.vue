@@ -4,19 +4,19 @@
 
         <span>Vigentes: {{obtenerTareasvigentes}}</span> - <span>Eliminadas: {{contadorEliminadas}} </span> - <span>Totales: {{obtenerTareasTotales}}</span>
         <br><br>
-        <tareas-nueva @nuevaTarea="agregarTarea"></tareas-nueva>
+        <tareas-nueva ></tareas-nueva>
         <br>
-        <tareas-filtrar v-model="filtro"></tareas-filtrar>
+        <tareas-filtrar></tareas-filtrar>
 
         <div v-if="cargando" class="cargando"><br><br>Cargando... </div>
-        <TareasListar v-else  :tareas="obtenerTareasFiltradas" @eliminarTarea="removerTarea"
-                      @editarTarea="modificarTarea"/>
+        <TareasListar v-else />
 
         <tareas-notificador :notificar="notificar"></tareas-notificador>
     </div>
 </template>
 
 <script>
+    import {mapActions, mapState, mapMutations} from 'vuex'
     import TareasNueva from "./TareasNueva";
     import TareasListar from "./TareasListar";
     import TareasFiltrar from "./TareasFiltrar";
@@ -26,28 +26,10 @@
         name: 'Tareas',
         components: {TareasListar, TareasNueva, TareasFiltrar, TareasNotificador},
         mounted() {
-
-            //Simulamos request al backend
-            this.cargando = true
-            setTimeout(()=>{
-                this.tareas = ['Aprender Vue', 'Aprender Vuex', 'Aprender Vuetify']
-                this.cargando = false
-            },1500)
-        },
-        data() {
-            return {
-                tareas: [],
-                filtro: '',
-                contadorEliminadas: 0,
-                notificar: null,
-                cargando: false
-            }
+           this.cargarTareas()
         },
         computed: {
-            obtenerTareasFiltradas() {
-                let reg = new RegExp(this.filtro, 'i')
-                return this.tareas.filter(tarea => reg.test(tarea))
-            },
+            ...mapState(['cargando','tareas', 'notificar','contadorEliminadas']), //this.cargando
             obtenerTareasvigentes() {
                 return this.tareas.length
             },
@@ -57,26 +39,12 @@
         },
         watch: {
             notificar() {
-                setTimeout(() => this.notificar = null, 1500)
+                setTimeout(() => this.setNotificar(null), 1500)
             }
         },
         methods: {
-            setNotificar(val) {
-                this.notificar = val
-            },
-            agregarTarea(tarea) {
-                this.tareas.push(tarea)
-                this.setNotificar('agregar')
-            },
-            removerTarea(index) {
-                this.tareas.splice(index, 1)
-                this.contadorEliminadas++
-                this.setNotificar('eliminar')
-            },
-            modificarTarea(index, texto) {
-                this.$set(this.tareas, index, texto)
-                this.setNotificar('editar')
-            }
+            ...mapActions(['cargarTareas']),
+            ...mapMutations(['setNotificar'])
         }
     }
 </script>
