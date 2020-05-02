@@ -1,8 +1,8 @@
 <template>
     <div>
-        <label>Nueva Tarea: </label>
-        <input type="text" v-model="tarea" @keyup.enter="nuevaTarea" />
-        <button @click="nuevaTarea">Agrear</button>
+
+        <v-text-field label="Nueva Tarea" v-model="tarea" @keyup.enter="nuevaTarea" />
+        <v-btn color="primary" @click="nuevaTarea">Agregar</v-btn>
     </div>
 </template>
 

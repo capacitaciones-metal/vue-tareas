@@ -1,7 +1,7 @@
 <template>
     <div>
-        <label>Filtrar Tareas: </label>
-        <input type="text" v-model="filtro">
+        <v-text-field hide-details label="Filtrar Tareas" type="text"
+                      v-model="filtro" />
     </div>
 </template>
 

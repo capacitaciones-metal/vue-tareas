@@ -8,11 +8,7 @@
                     </v-card-text>
                 </v-card>
 
-                <v-card class="mt-3">
-                    <v-card-text>
-                        <tareas-filtrar></tareas-filtrar>
-                    </v-card-text>
-                </v-card>
+
 
                 <v-card class="mt-3" >
                     <v-card-text>
@@ -23,7 +19,14 @@
             </v-col>
 
             <v-col cols="4">
-                <v-card>
+
+                <v-card >
+                    <v-card-text>
+                        <tareas-filtrar></tareas-filtrar>
+                    </v-card-text>
+                </v-card>
+
+                <v-card class="mt-3">
                     <v-card-text>
                         <span>Vigentes: {{obtenerTareasvigentes}}</span> -
                         <span>Eliminadas: {{contadorEliminadas}} </span> -
