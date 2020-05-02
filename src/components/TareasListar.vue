@@ -1,19 +1,32 @@
 <template>
     <ul>
-        <li v-for="(tarea,index) in obtenerTareasFiltradas" :key="index">
+        <li class="ma-2" v-for="(tarea,index) in obtenerTareasFiltradas" :key="index">
 
             <template v-if="editando === index">
-                <input type="text" v-model="texto" @keyup.enter="emitirTareaEditada" />
-                <button @click="emitirTareaEditada">confirmar</button>
+                <v-row>
+                    <v-col cols="8">
+                        <v-text-field hide-details dense solo type="text" v-model="texto" @keyup.enter="emitirTareaEditada" />
+
+                    </v-col>
+                    <v-col cols="4">
+                        <v-btn class="mt-1" small color="success" @click="emitirTareaEditada">confirmar</v-btn>
+
+                    </v-col>
+                </v-row>
             </template>
 
             <template v-else>
                 {{tarea}}
-                <button class="editar" @click="editarTarea(index,tarea)">editar</button>
-                <button class="eliminar" @click="removerTarea(index)">eliminar</button>
+                <v-btn icon x-small color="red" class="float-right" @click="removerTarea(index)">
+                    <v-icon>mdi-delete</v-icon>
+                </v-btn>
+                <v-btn icon x-small color="blue" class="float-right" @click="editarTarea(index,tarea)">
+                    <v-icon>mdi-pencil</v-icon>
+                </v-btn>
+
             </template>
 
-
+            <v-divider></v-divider>
         </li>
     </ul>
 </template>
