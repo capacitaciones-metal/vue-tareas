@@ -1,17 +1,45 @@
 <template>
-    <div class="box" :class="notificar">
+    <v-snackbar top :color="tipo" dark v-model="snack" :timeout="800" @input="setNotificar(null)">
         {{mensaje}}
-    </div>
+    </v-snackbar>
 </template>
 
 <script>
+    import {mapMutations} from 'vuex'
     let types = ['eliminar', 'editar', 'agregar']
     export default {
         name: "TareasNotificador",
         props: {
             notificar: {type: String, validator: value => types.includes(value)}
         },
+        data(){
+            return {
+                snack: false
+            }
+        },
+        watch: {
+          notificar(val){
+              if(val){
+                  this.snack= true
+              }
+          }
+        },
+        methods: {
+            ...mapMutations(['setNotificar'])
+        },
         computed: {
+            tipo(){
+                switch (this.notificar) {
+                    case 'eliminar':
+                        return 'error'
+                    case 'editar':
+                        return 'warning'
+                    case 'agregar':
+                        return 'success'
+                    default:
+                        return 'info'
+                }
+            },
             mensaje() {
                 switch (this.notificar) {
                     case 'eliminar':
@@ -19,7 +47,7 @@
                     case 'editar':
                         return 'Se edito una tarea'
                     case 'agregar':
-                        return 'se agrego una tarea'
+                        return 'Se agrego una tarea'
                     default:
                         return ''
                 }

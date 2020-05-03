@@ -64,11 +64,6 @@
                 return this.obtenerTareasvigentes + this.contadorEliminadas
             }
         },
-        watch: {
-            notificar() {
-                setTimeout(() => this.setNotificar(null), 1500)
-            }
-        },
         methods: {
             ...mapActions(['cargarTareas']),
             ...mapMutations(['setNotificar'])
