@@ -3,6 +3,8 @@
         <v-row>
             <v-col cols="8">
                 <v-card>
+                    <v-card-title>Nueva</v-card-title>
+                    <v-card-subtitle>Agregar nuevas tareas</v-card-subtitle>
                     <v-card-text>
                         <tareas-nueva></tareas-nueva>
                     </v-card-text>
@@ -11,8 +13,16 @@
 
 
                 <v-card class="mt-3" >
+                    <v-card-title>Tareas</v-card-title>
+                    <v-card-subtitle>Ver, editar y eliminar las tareas</v-card-subtitle>
                     <v-card-text>
-                        <div v-if="cargando" class="cargando"><br><br>Cargando...</div>
+                        <div v-if="cargando" class="cargando">
+                            <v-progress-circular
+                                    :size="40"
+                                    color="primary"
+                                    indeterminate
+                            ></v-progress-circular>
+                        </div>
                         <TareasListar v-else/>
                     </v-card-text>
                 </v-card>
@@ -21,16 +31,58 @@
             <v-col cols="4">
 
                 <v-card >
+                    <v-card-title>Filtrar</v-card-title>
+                    <v-card-subtitle>Buscar entre las tareas</v-card-subtitle>
                     <v-card-text>
                         <tareas-filtrar></tareas-filtrar>
                     </v-card-text>
                 </v-card>
 
                 <v-card class="mt-3">
+                    <v-card-title>Metricas</v-card-title>
+                    <v-card-subtitle>Algunos numeros...</v-card-subtitle>
                     <v-card-text>
-                        <span>Vigentes: {{obtenerTareasvigentes}}</span> -
-                        <span>Eliminadas: {{contadorEliminadas}} </span> -
-                        <span>Totales: {{obtenerTareasTotales}}</span>
+                        <v-chip
+                                class="ma-2"
+                                color="green"
+                                text-color="white"
+                        >
+                            <v-avatar
+                                    left
+                                    class="green darken-4"
+                            >
+                                {{obtenerTareasvigentes}}
+                            </v-avatar>
+                            Vigentes
+                        </v-chip>
+
+                        <v-chip
+                                class="ma-2"
+                                color="red"
+                                text-color="white"
+                        >
+                            <v-avatar
+                                    left
+                                    class="red darken-4"
+                            >
+                                {{contadorEliminadas}}
+                            </v-avatar>
+                            Eliminadas
+                        </v-chip>
+
+                        <v-chip
+                                class="ma-2"
+                                color="indigo"
+                                text-color="white"
+                        >
+                            <v-avatar
+                                    left
+                                    class="indigo darken-4"
+                            >
+                                {{obtenerTareasTotales}}
+                            </v-avatar>
+                            Totales
+                        </v-chip>
                     </v-card-text>
                 </v-card>
             </v-col>
